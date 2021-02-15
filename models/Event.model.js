@@ -14,18 +14,16 @@ const eventSchema = new Schema(
     },
     date: {
       type: Date,
-      required: [true, 'Email is required.'],
+      required: [true, 'Date is required.'],
     },
     guestNumber: {
       type: Number,
-      required: [true, 'Input a number of attendees']
     },
     location: {
       type: String,
-      required: [true, 'Please input location of the event']
     },
     description: {
-      type: Text,
+      type: String,
     }
 
   },
