@@ -57,4 +57,7 @@ app.use('/', index);
 app.use('/api', require('./routes/events-routes'))
 app.use('/api', require('./routes/guestlist-routes'))
 
+const authRoutes = require('./routes/auth-routes');
+app.use('/api', authRoutes);
+
 module.exports = app;
