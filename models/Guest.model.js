@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const { Schema, model } = mongoose;
 
-const eventSchema = new Schema(
+const guestSchema = new Schema(
   {
     event: {
       type: Schema.Types.ObjectId,
@@ -18,11 +18,11 @@ const eventSchema = new Schema(
       required: [true, 'Last name is required.'],
     },
     constact: {
-      type: Text,
+      type: String,
       required: [true, 'Input an email of the guest']
     },
     tag: {
-      type: Text,
+      type: String,
     }
 
   },

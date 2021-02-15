@@ -55,5 +55,6 @@ const index = require('./routes/index');
 app.use('/', index);
 
 app.use('/api', require('./routes/events-routes'))
+app.use('/api', require('./routes/guestlist-routes'))
 
 module.exports = app;
