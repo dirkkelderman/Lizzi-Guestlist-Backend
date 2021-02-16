@@ -26,7 +26,7 @@ eventsRoutes.post('/events', (req, res, next) => {
   }
 
   Event.create({
-    // user: req.user._id,
+    // owner: req.user._id,
     eventName,
     date,
     guestNumber,

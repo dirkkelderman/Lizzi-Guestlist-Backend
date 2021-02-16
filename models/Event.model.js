@@ -3,9 +3,13 @@ const { Schema, model } = mongoose;
 
 const eventSchema = new Schema(
   {
-    user: {
+    owner: {
       type: Schema.Types.ObjectId,
       ref: 'User',
+    },
+    guest: {
+      type: Schema.Types.ObjectId,
+      ref: 'Guest',
     },
     eventName: {
       type: String,

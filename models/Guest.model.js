@@ -24,7 +24,6 @@ const guestSchema = new Schema(
     tag: {
       type: String,
     }
-
   },
   {
     timestamps: true

@@ -36,12 +36,13 @@ authRoutes.post('/signup', (req, res, next) => {
         const hashPass = bcrypt.hashSync(password, salt);
   
         const aNewUser = new User({
-            username:username,
+            username: username,
             password: hashPass
         });
   
         aNewUser.save(err => {
             if (err) {
+                console.log(err)
                 res.status(500).json({ message: 'Saving user to database went wrong.' });
                 return;
             }
@@ -49,6 +50,7 @@ authRoutes.post('/signup', (req, res, next) => {
             req.login(aNewUser, (err) => {
  
                 if (err) {
+                    console.log(err)
                     res.status(500).json({ message: 'Login after signup went bad.' });
                     return;
                 }
