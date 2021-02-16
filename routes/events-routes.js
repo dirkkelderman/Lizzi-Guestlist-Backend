@@ -7,7 +7,7 @@ Event = require('../models/Event.model')
 // Get the complete event list
 eventsRoutes.get('/events', (req, res, next) => {
   Event.find()
-  // .populate('owner')
+  .populate('owner')
   .then( response => {
     res.json(response);
   })
@@ -19,7 +19,7 @@ eventsRoutes.get('/events', (req, res, next) => {
 // Create a event
 eventsRoutes.post('/events', (req, res, next) => {
 
-  const {eventName, date, guestNumber, location, description} = req.body
+  const {eventName, date, guestNumber, location, description, owner} = req.body
   // const { _id } = req.user;
 
 
