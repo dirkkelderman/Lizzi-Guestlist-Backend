@@ -3,6 +3,7 @@ const mongoose        = require('mongoose');
 const guestlistRoutes    = express.Router();
 
 Guest = require('../models/Guest.model')
+Event = require('../models/Event.model')
 
 
 // Get complete guestlist
@@ -26,7 +27,14 @@ guestlistRoutes.post('/guestlist', (req, res, next) => {
     guestFirstName, 
     guestLastName, 
     contact, 
-    tag
+    tag,
+    // event: req.body.id
+  })
+  .then( (newGuest) => {
+    return Event.findByIdAndUpdate(req.body.id, 
+      {$push: { guest: newGuest._id}
+    }, 
+      {new: true})
   })
   // .populate('owner')
   .then( response => {

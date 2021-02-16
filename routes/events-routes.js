@@ -20,6 +20,8 @@ eventsRoutes.get('/events', (req, res, next) => {
 eventsRoutes.post('/events', (req, res, next) => {
 
   const {eventName, date, guestNumber, location, description} = req.body
+  // const { _id } = req.user;
+
 
   if (!eventName || !date) {
     res.status(400).json({ message: 'Provide event name and date' });
@@ -27,7 +29,7 @@ eventsRoutes.post('/events', (req, res, next) => {
   }
 
   Event.create({
-    // owner: req.user._id,
+    // owner: _id,
     eventName,
     date,
     guestNumber,
