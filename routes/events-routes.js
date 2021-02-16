@@ -4,10 +4,10 @@ const eventsRoutes    = express.Router();
 
 Event = require('../models/Event.model')
 
-
+// Get the complete event list
 eventsRoutes.get('/events', (req, res, next) => {
   Event.find()
-  // .populate('guest')
+  // .populate('owner')
   .then( response => {
     res.json(response);
   })
@@ -16,6 +16,7 @@ eventsRoutes.get('/events', (req, res, next) => {
   });
 })
 
+// Create a event
 eventsRoutes.post('/events', (req, res, next) => {
 
   const {eventName, date, guestNumber, location, description} = req.body
@@ -38,10 +39,12 @@ eventsRoutes.post('/events', (req, res, next) => {
     res.status(200).json(response)
   })
   .catch( err => {
+    console.log(err)
     res.status(500).json(err)
   })
 })
 
+// Get a single event
 eventsRoutes.get('/events/:id', (req, res, next) => {
   
   if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
@@ -50,7 +53,7 @@ eventsRoutes.get('/events/:id', (req, res, next) => {
   }
 
   Event.findById(req.params.id)
-    // .populate('guest')
+  .populate('owner')
   .then(event => {
     res.status(200).json(event)
   })
@@ -60,6 +63,7 @@ eventsRoutes.get('/events/:id', (req, res, next) => {
 
 })
 
+// Update a single event
 eventsRoutes.put('/events/:id', (req, res, next) => {
   
   if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
@@ -77,6 +81,7 @@ eventsRoutes.put('/events/:id', (req, res, next) => {
 
 })
 
+// Delete a single event
 eventsRoutes.delete('/events/:id', (req, res, next) => {
   if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
     res.status(400).json({ message: 'Specified id is not valid' });

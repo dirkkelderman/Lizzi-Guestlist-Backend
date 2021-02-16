@@ -10,16 +10,16 @@ const guestSchema = new Schema(
     guestFirstName: {
       type: String,
       trim: true,
-      required: [true, 'First name is required.'],
+      // required: [true, 'First name is required.'],
     },
     guestLastName: {
       type: String,
       trim: true,
-      required: [true, 'Last name is required.'],
+      // required: [true, 'Last name is required.'],
     },
-    constact: {
+    contact: {
       type: String,
-      required: [true, 'Input an email of the guest']
+      // required: [true, 'Input an email of the guest']
     },
     tag: {
       type: String,

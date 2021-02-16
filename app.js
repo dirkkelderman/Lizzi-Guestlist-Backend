@@ -60,8 +60,11 @@ app.use(passport.session());
 const index = require('./routes/index');
 app.use('/', index);
 
-app.use('/api', require('./routes/events-routes'))
-app.use('/api', require('./routes/guestlist-routes'))
+const eventRoutes = require('./routes/events-routes')
+app.use('/api', eventRoutes)
+
+const guestRoutes = require('./routes/guestlist-routes')
+app.use('/api', guestRoutes)
 
 const authRoutes = require('./routes/auth-routes');
 app.use('/api', authRoutes);
