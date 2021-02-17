@@ -9,7 +9,7 @@ Event = require('../models/Event.model')
 // Get complete guestlist
 guestlistRoutes.get('/guestlist', (req, res, next) => {
   Guest.find()
-  // .populate('owner')
+  .populate('owner')
   .then( response => {
     res.json(response);
   })
@@ -36,7 +36,7 @@ guestlistRoutes.post('/guestlist', (req, res, next) => {
     }, 
       {new: true})
   })
-  // .populate('owner')
+  //.populate('owner')
   .then( response => {
     res.json(response);
   })
