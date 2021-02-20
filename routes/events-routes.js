@@ -1,13 +1,14 @@
 const express         = require('express');
 const mongoose        = require('mongoose');
 const eventsRoutes    = express.Router();
+const User = require('../models/User.model')
 
 Event = require('../models/Event.model')
 
 // Get the complete event list
 eventsRoutes.get('/events', (req, res, next) => {
   Event.find()
-  .populate('owner')
+  .populate('user')
   .then( response => {
     res.json(response);
   })
@@ -19,9 +20,7 @@ eventsRoutes.get('/events', (req, res, next) => {
 // Create a event
 eventsRoutes.post('/events', (req, res, next) => {
 
-  const {eventName, date, guestNumber, location, description, owner} = req.body
-  // const { _id } = req.user;
-
+  const {eventName, date, guestNumber, location, description} = req.body
 
   if (!eventName || !date) {
     res.status(400).json({ message: 'Provide event name and date' });
@@ -29,12 +28,13 @@ eventsRoutes.post('/events', (req, res, next) => {
   }
 
   Event.create({
-    // owner: _id,
     eventName,
     date,
     guestNumber,
     location,
-    description
+    description,
+    owner: req.user._id,
+    event: req.body.id
   })
   .then(response => {
     console.log('Event created')

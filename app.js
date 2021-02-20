@@ -35,6 +35,17 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
+// session
+app.use(session({
+  secret: 'i use to be a DJ',
+  resave: true,
+  saveUninitialized: true,
+}))
+
+app.use(passport.initialize());
+app.use(passport.session())
+
+
 // Express View engine setup
 
 app.use(require('node-sass-middleware')({

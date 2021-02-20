@@ -3,10 +3,6 @@ const { Schema, model } = mongoose;
 
 const eventSchema = new Schema(
   {
-    owner: {
-      type: Schema.Types.ObjectId,
-      ref: 'User',
-    },
     guest: {
       type: Schema.Types.ObjectId,
       ref: 'Guest',
@@ -28,8 +24,11 @@ const eventSchema = new Schema(
     },
     description: {
       type: String,
-    }
-
+    },
+    owner: {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+    },
   },
   {
     timestamps: true

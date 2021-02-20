@@ -20,10 +20,10 @@ const userSchema = new Schema(
       type: String,
       // required: [true, 'Password is required.']
     },
-    event: {
+    event: [{
       type: Schema.Types.ObjectId,
       ref: 'Event',
-    }
+    }]
   },
   {
     timestamps: true
@@ -31,3 +31,4 @@ const userSchema = new Schema(
 );
 
 module.exports = model('User', userSchema);
+
