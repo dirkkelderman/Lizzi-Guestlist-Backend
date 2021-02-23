@@ -23,6 +23,9 @@ const guestSchema = new Schema(
     },
     tag: {
       type: String,
+    },
+    ticketNumber: {
+      type: Number
     }
   },
   {

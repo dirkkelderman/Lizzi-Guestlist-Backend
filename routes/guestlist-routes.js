@@ -21,14 +21,15 @@ guestlistRoutes.get('/guestlist', (req, res, next) => {
 // Create a new guest
 guestlistRoutes.post('/guestlist', (req, res, next) => {
 
-  const {guestFirstName, guestLastName, contact, tag} = req.body
+  const {event, guestFirstName, guestLastName, contact, tag, ticketNumber} = req.body
 
   Guest.create({
     guestFirstName, 
     guestLastName, 
     contact, 
     tag,
-    // event: req.body.id
+    ticketNumber,
+    event
   })
   .then( (newGuest) => {
     return Event.findByIdAndUpdate(req.body.id, 
