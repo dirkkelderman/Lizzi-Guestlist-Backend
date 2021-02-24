@@ -26,6 +26,10 @@ const guestSchema = new Schema(
     },
     ticketNumber: {
       type: Number
+    },
+    freeTickets: {
+      type: Number,
+      default: 0
     }
   },
   {
