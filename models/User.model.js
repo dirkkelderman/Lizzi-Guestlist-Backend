@@ -9,6 +9,7 @@ const userSchema = new Schema(
       // required: [true, 'Username is required.'],
       unique: true
     },
+    imageUrl: String,
     email: {
       type: String,
       // required: [true, 'Email is required.'],
