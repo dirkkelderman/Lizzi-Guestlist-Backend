@@ -8,7 +8,8 @@ Event = require('../models/Event.model')
 
 // Get the complete event list
 eventsRoutes.get('/events', (req, res, next) => {
-  Event.find()
+
+  Event.find({owner: req.user._id})
   .populate('user')
   .then( response => {
     res.json(response);
