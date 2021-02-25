@@ -10,7 +10,6 @@ Event = require('../models/Event.model')
 eventsRoutes.get('/events', (req, res, next) => {
 
   Event.find({owner: req.user._id})
-  .populate('user')
   .then( response => {
     res.json(response);
   })
@@ -36,7 +35,7 @@ eventsRoutes.post('/events', (req, res, next) => {
     location,
     description,
     owner: req.user._id,
-    event: req.body.id
+    // event: req.body.id
   })
   .then(response => {
     console.log('Event created')
@@ -63,7 +62,7 @@ eventsRoutes.get('/events/:id', (req, res, next) => {
   }
 
   Event.findById(req.params.id)
-  .populate('owner')
+  .populate('guest')
   .then(event => {
     res.status(200).json(event)
   })

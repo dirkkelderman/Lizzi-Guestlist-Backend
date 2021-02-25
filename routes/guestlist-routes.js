@@ -6,16 +6,18 @@ Guest = require('../models/Guest.model')
 Event = require('../models/Event.model')
 
 
-// Get complete guestlist
-guestlistRoutes.get('/guestlist', (req, res, next) => {
+// Get complete guestlistid
+guestlistRoutes.get('/events/:eventId/guestList/:guestId', (req, res, next) => {
 
   // const {ObjectId} = req.body
 
-  // console.log(req.body)
+  console.log(req.body)
+  console.log(req.params)
+
 
   // Guest.find({ event: ObjectId })
   Guest.find()
-  .populate('owner')
+  //.populate('owner')
   .then( response => {
     res.json(response);
   })
@@ -39,7 +41,7 @@ guestlistRoutes.post('/guestlist', (req, res, next) => {
     event
   })
   .then( (newGuest) => {
-    return Event.findByIdAndUpdate(req.body.id, 
+    return Event.findByIdAndUpdate(req.body.event, 
       {$push: { guest: newGuest._id}
     }, 
       {new: true})
