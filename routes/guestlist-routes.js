@@ -8,16 +8,7 @@ Event = require('../models/Event.model')
 
 // Get complete guestlistid
 guestlistRoutes.get('/events/:eventId/guestList/:guestId', (req, res, next) => {
-
-  // const {ObjectId} = req.body
-
-  console.log(req.body)
-  console.log(req.params)
-
-
-  // Guest.find({ event: ObjectId })
   Guest.find()
-  //.populate('owner')
   .then( response => {
     res.json(response);
   })
@@ -46,7 +37,6 @@ guestlistRoutes.post('/guestlist', (req, res, next) => {
     }, 
       {new: true})
   })
-  //.populate('owner')
   .then( response => {
     res.json(response);
   })
@@ -72,7 +62,6 @@ guestlistRoutes.get('/guestlist/:guestId', (req, res, next) => {
   .catch( err => {
     res.status(500).json(err)
   })
-
 })
 
 

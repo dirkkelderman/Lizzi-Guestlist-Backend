@@ -35,7 +35,6 @@ eventsRoutes.post('/events', (req, res, next) => {
     location,
     description,
     owner: req.user._id,
-    // event: req.body.id
   })
   .then(response => {
     console.log('Event created')
