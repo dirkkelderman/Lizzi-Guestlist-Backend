@@ -3,10 +3,10 @@ const { Schema, model } = mongoose;
 
 const eventSchema = new Schema(
   {
-    guest: {
+    guest: [{
       type: Schema.Types.ObjectId,
       ref: 'Guest',
-    },
+    }],
     eventName: {
       type: String,
       trim: true,
