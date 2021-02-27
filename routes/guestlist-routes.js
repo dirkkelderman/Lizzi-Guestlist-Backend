@@ -20,7 +20,7 @@ guestlistRoutes.get('/events/:eventId/guestList/:guestId', (req, res, next) => {
 // Create a new guest
 guestlistRoutes.post('/guestlist', (req, res, next) => {
 
-  const {event, guestFirstName, guestLastName, contact, tag, ticketNumber, freeTickets} = req.body
+  const {event, guestFirstName, guestLastName, contact, tag, ticketNumber} = req.body
 
   Guest.create({
     guestFirstName, 
@@ -28,7 +28,6 @@ guestlistRoutes.post('/guestlist', (req, res, next) => {
     contact, 
     tag,
     ticketNumber,
-    freeTickets,
     event
   })
   .then( (newGuest) => {
