@@ -9,11 +9,15 @@ const userSchema = new Schema(
       // required: [true, 'Username is required.'],
       unique: true
     },
-    imageUrl: String,
+    imageUrl:{
+      type: String,
+      default: "https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png"
+    },
     email: {
       type: String,
       // required: [true, 'Email is required.'],
       // unique: true,
+      default: "test@email.com",
       lowercase: true,
       trim: true
     },

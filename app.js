@@ -89,4 +89,10 @@ app.use('/api', guestRoutes)
 const authRoutes = require('./routes/auth-routes');
 app.use('/api', authRoutes);
 
+const uploadRoutes = require('./routes/file-upload')
+app.use('/api', uploadRoutes);
+
+const profileRoutes = require('./routes/profile-routes')
+app.use('/api', profileRoutes);
+
 module.exports = app;
