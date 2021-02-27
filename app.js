@@ -16,7 +16,7 @@ const passport      = require('passport');
 require('./configs/passport')
 
 mongoose
-  .connect('mongodb://localhost/lizzi-guestlist-backend', {useNewUrlParser: true, useUnifiedTopology: true})
+  .connect(process.env.MONGODB_URI, {useNewUrlParser: true, useUnifiedTopology: true})
   .then(x => {
     console.log(`Connected to Mongo! Database name: "${x.connections[0].name}"`)
   })
@@ -69,7 +69,7 @@ app.locals.title = 'Express - Generated with IronGenerator';
 app.use(
   cors({
     credentials: true,
-    origin: ['http://localhost:3000']
+    origin: [process.env.CORS_ALLOWED]
   })
 );
 
