@@ -25,9 +25,9 @@ const guestSchema = new Schema(
       type: String,
     },
     ticketNumber: {
-      type: Number
+      type: Number,
     },
-    freeTickets: {
+    ticketsCheckedIn: {
       type: Number,
       default: 0
     }
