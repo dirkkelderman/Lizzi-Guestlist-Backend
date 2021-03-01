@@ -6,10 +6,10 @@ const bcrypt = require("bcryptjs");
 const User = require("../models/User.model");
 
 authRoutes.post("/signup", (req, res, next) => {
-  const username = req.body.username;
+  const email = req.body.email;
   const password = req.body.password;
 
-  if (!username || !password) {
+  if (!email || !password) {
     res.status(400).json({ message: "Provide username and password" });
     return;
   }
@@ -24,7 +24,7 @@ authRoutes.post("/signup", (req, res, next) => {
     return;
   }
 
-  User.findOne({ username }, (err, foundUser) => {
+  User.findOne({ email }, (err, foundUser) => {
     if (err) {
       res.status(500).json({ message: "Username check went bad." });
       return;
@@ -39,7 +39,7 @@ authRoutes.post("/signup", (req, res, next) => {
     const hashPass = bcrypt.hashSync(password, salt);
 
     const aNewUser = new User({
-      username: username,
+      email: email,
       password: hashPass,
     });
 

@@ -17,15 +17,15 @@ passport.deserializeUser((userIdFromSession, cb) => {
   });
 });
 
-passport.use(new LocalStrategy((username, password, next) => {
-  User.findOne({ username }, (err, foundUser) => {
+passport.use(new LocalStrategy((email, password, next) => {
+  User.findOne({ email }, (err, foundUser) => {
     if (err) {
       next(err);
       return;
     }
 
     if (!foundUser) {
-      next(null, false, { message: 'Incorrect username.' });
+      next(null, false, { message: 'Incorrect email.' });
       return;
     }
 
