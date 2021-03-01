@@ -17,7 +17,7 @@ passport.deserializeUser((userIdFromSession, cb) => {
   });
 });
 
-passport.use(new LocalStrategy((email, password, next) => {
+passport.use(new LocalStrategy({ usernameField: "email" }, (email, password, next) => {
   User.findOne({ email }, (err, foundUser) => {
     if (err) {
       next(err);
