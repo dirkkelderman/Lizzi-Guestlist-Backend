@@ -95,4 +95,7 @@ app.use('/api', uploadRoutes);
 const profileRoutes = require('./routes/profile-routes')
 app.use('/api', profileRoutes);
 
+const patchRoutes= require('./routes/patch.route')
+app.use('/api', patchRoutes);
+
 module.exports = app;

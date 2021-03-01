@@ -3,10 +3,10 @@ const express = require('express');
 const router  = express.Router();
 const User = require('../models/User.model');
 
-router.patch("/:Id", async (req, res) => {
+router.patch("/profile/:_id", async (req, res) => {
   try {
     const updateProfile = await User.findOneAndUpdate(
-      { orderId: req.params.id },
+      { _id: req.params._id },
       req.body,
       { new: true }
     );
@@ -18,3 +18,6 @@ router.patch("/:Id", async (req, res) => {
     res.status(500).json({ error: err });
   }
 });
+
+
+module.exports = router;
