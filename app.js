@@ -41,8 +41,16 @@ app.use(session({
   secret: 'i use to be a DJ',
   resave: true,
   saveUninitialized: true,
-  
+  cookie:{
+    secure: process.env.NODE_ENV === "production", 
+    sameSite: process.env.NODE_ENV === "production" ? 'none' : 'lax',
+    // httpOnly: false,
+    maxAge: 60000000
+  },
+  ttl: 60 * 60 * 24
 }))
+
+app.set('trust proxy', 1)
 
 app.use(passport.initialize());
 app.use(passport.session())
