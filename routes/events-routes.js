@@ -21,6 +21,8 @@ eventsRoutes.get('/events', (req, res, next) => {
 // Create a event
 eventsRoutes.post('/events', (req, res, next) => {
 
+  console.log("User id...", req.user._id)
+
   const {eventName, date, guestNumber, location, description} = req.body
 
   if (!eventName || !date) {
