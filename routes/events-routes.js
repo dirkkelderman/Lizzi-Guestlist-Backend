@@ -40,12 +40,9 @@ eventsRoutes.post('/events', (req, res, next) => {
     owner,
   })
   .then(response => {
-    console.log('Event created')
     res.status(200).json(response)
-  })
-  .then( (newEvent) => {
-    return User.findByIdAndUpdate(req.user._id, 
-      {$push: { event: newEvent._id}
+    return User.findByIdAndUpdate(owner, 
+      {$push: { event: response._id}
     }, 
       {new: true})
   })
