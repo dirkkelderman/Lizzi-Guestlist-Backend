@@ -24,6 +24,7 @@ eventsRoutes.post('/events', (req, res, next) => {
   console.log("User id...", req.user._id)
 
   const {eventName, date, guestNumber, location, description} = req.body
+  const owner = req.user._id
 
   if (!eventName || !date) {
     res.status(400).json({ message: 'Provide event name and date' });
@@ -36,14 +37,14 @@ eventsRoutes.post('/events', (req, res, next) => {
     guestNumber,
     location,
     description,
-    owner: req.user._id,
+    owner,
   })
   .then(response => {
     console.log('Event created')
     res.status(200).json(response)
   })
   .then( (newEvent) => {
-    return User.findByIdAndUpdate(owner, 
+    return User.findByIdAndUpdate(req.user._id, 
       {$push: { event: newEvent._id}
     }, 
       {new: true})
