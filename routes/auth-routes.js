@@ -5,6 +5,14 @@ const bcrypt = require("bcryptjs");
 
 const User = require("../models/User.model");
 
+const nodemailer = require("nodemailer");
+const templates = require('../email/templates')
+const async = require('async');
+const crypto = require('crypto');
+const mongoose = require('mongoose');
+const router  = express.Router();
+
+
 authRoutes.post("/signup", (req, res, next) => {
   const email = req.body.email;
   const password = req.body.password;
@@ -105,5 +113,74 @@ authRoutes.get("/loggedin", (req, res, next) => {
   }
   res.status(403).json({ message: "Unauthorized" });
 });
+
+// Route to request reset token
+authRoutes.post('/forgot', (req, res, next) => {
+  
+  async.waterfall([ (done) => {
+      crypto.randomBytes(20, (err, buf) => {
+        var token = buf.toString('hex');
+        done(err, token);
+      });
+    },
+    (token, done) => {
+      User.findOne({ email: req.body.email }, function(err, user) {
+        if (!user) {
+          res.status(500).json({ message: "No account with that email address exists." });
+          return
+          // req.flash('error', 'No account with that email address exists.');
+          // return res.redirect('/forgot');
+        }
+
+        user.resetPasswordToken = token;
+        user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
+
+        user.save(function(err) {
+          done(err, token, user);
+        });
+
+        res.status(200).json({ message: "Token saved" })
+        return
+      });
+    }, (token, user, done) => {
+      let host = req.headers.host
+      let resetToken = token
+
+      
+      let smtpTransport = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+          user: process.env.MAIL_USER,
+          pass: process.env.MAIL_PASS
+        }
+      });
+      let mailOptions = {
+        to: user.email,
+        from: 'passwordreset@demo.com',
+        subject: 'Password Reset',
+        html: templates.passwordReset(host, resetToken),
+      };
+      smtpTransport.sendMail(mailOptions, (err) => {
+        
+        // res.status(200).json({message: 'An e-mail has been sent to ' + user.email + ' with further instructions.'})
+        // req.flash('info', 'An e-mail has been sent to ' + user.email + ' with further instructions.');
+        done(err, 'done');
+      });
+      // return res.status(200).json({ message: "Email is send" })
+    }
+  ], (err) => {
+    
+      console.log(err);
+      res
+        .status(500)
+        .json({ message: "Saving user to database went wrong." });
+      return;
+    
+    // if (err) return next(err);
+    // res.redirect('/forgot');
+  });
+});
+
+
 
 module.exports = authRoutes;
