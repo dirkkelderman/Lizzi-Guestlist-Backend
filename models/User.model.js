@@ -17,7 +17,7 @@ const userSchema = new Schema(
       type: String,
       // required: [true, 'Email is required.'],
       // unique: true,
-      default: "test@email.com",
+      // default: "test@email.com",
       lowercase: true,
       trim: true
     },
@@ -28,7 +28,11 @@ const userSchema = new Schema(
     event: [{
       type: Schema.Types.ObjectId,
       ref: 'Event',
-    }]
+    }],
+    confirmed: {
+      type: Boolean,
+      default: false
+    }
   },
   {
     timestamps: true

@@ -13,6 +13,9 @@ const cors         = require('cors')
 const session       = require('express-session');
 const passport      = require('passport');
 
+const emailController = require('./email/email.controller');
+
+
 require('./configs/passport')
 
 mongoose
@@ -87,6 +90,23 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
+// Email confirmation
+// app.use(express.json())
+
+// app.get('/wake-up', (req, res) => res.json('👌'))
+
+// app.post('/email', emailController.collectEmail)
+
+// app.get('/email/confirm/:id', emailController.confirmEmail)
+
+// app.use('*', (req, res) => {
+//   res.status(404).json({ msg: 'Not Found' })
+// })
+
+
+
+
+
 const index = require('./routes/index');
 app.use('/', index);
 
@@ -107,5 +127,10 @@ app.use('/api', profileRoutes);
 
 const patchRoutes= require('./routes/patch.route')
 app.use('/api', patchRoutes);
+
+const emailRoutes= require('./routes/email-routes')
+app.use('/api', emailRoutes);
+
+
 
 module.exports = app;
