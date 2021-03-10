@@ -143,7 +143,7 @@ authRoutes.post('/forgot', (req, res, next) => {
         return
       });
     }, (token, user, done) => {
-      let host = req.headers.host
+      let host = process.env.CORS_ALLOWED
       let resetToken = token
 
       
@@ -182,5 +182,70 @@ authRoutes.post('/forgot', (req, res, next) => {
 });
 
 
+authRoutes.post('/reset/:token', (req, res) => {
+  async.waterfall([ (done) => {
+      User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, function(err, user) {
+        
+        
+        if (!user) {
+          res.status(400).json({ message: "This user has not been found or the token has expired" });
+          return;
+        }
+        let newPassword = req.body.password;
+
+
+        bcrypt.genSalt(10)
+        .then(salt => bcrypt.hash(newPassword, salt))
+        .then(hashedPassword => {
+          return User.findOneAndUpdate(
+              {_id: user.id}, 
+              { $set:  { 
+                password: hashedPassword,
+                resetPasswordToken: undefined,
+                resetPasswordExpires: undefined
+              }}, 
+              {useFindAndModify: false}
+            );
+        })
+        .then( (user, done) => {
+            let userEmail = user.email
+          let smtpTransport = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+              user: process.env.MAIL_USER,
+              pass: process.env.MAIL_PASS
+            }
+          });
+          let mailOptions = {
+            to: user.email,
+            from: 'passwordreset@demo.com',
+            subject: 'Password Reset Confirmation',
+            html: templates.passwordResetConfirmation(userEmail),
+          };
+          smtpTransport.sendMail(mailOptions, (err) => {
+            done(err, 'done');
+          });
+        })
+        .then(() => {
+          req.login(user, (err) => {
+            if (err) {
+              console.log(err);
+              res.status(500).json({ message: "Login after signup went bad." });
+              return;
+            }
+    
+            res.status(200).json(user);
+          });
+        })
+        .catch(err => {
+          console.log(err);
+        });
+      });
+    },
+  ], 
+  function(err) {
+    console.log(err);
+  });
+});
 
 module.exports = authRoutes;

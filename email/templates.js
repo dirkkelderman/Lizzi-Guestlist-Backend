@@ -531,7 +531,7 @@ module.exports = {
 
 Please click on the following link, or paste this into your browser to complete the process:</p>
 
-  <a href="http://${host}/reset/${resetToken}">http://${host}/reset/${resetToken}</a>
+  <a href="${host}/reset/${resetToken}">${host}/reset/${resetToken}</a>
 
 
 <p>If you did not request this, please ignore this email and your password will remain unchanged.

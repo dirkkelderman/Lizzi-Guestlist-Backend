@@ -12,7 +12,7 @@ const emailController = require('../email/email.controller')
 
 app.use(express.json())
 
-app.get('/wake-up', (req, res) => res.json('👌'))
+app.get('/wake-up', (req, res) => res.json('connected'))
 
 app.post('/email', emailController.collectEmail)
 
