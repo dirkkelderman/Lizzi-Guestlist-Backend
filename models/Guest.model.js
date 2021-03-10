@@ -22,7 +22,8 @@ const guestSchema = new Schema(
       // required: [true, 'Input an email of the guest']
     },
     tag: {
-      type: String,
+      type: [String],
+      default: undefined
     },
     ticketNumber: {
       type: Number,

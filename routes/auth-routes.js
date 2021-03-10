@@ -78,6 +78,14 @@ authRoutes.post("/signup", (req, res, next) => {
 });
 
 authRoutes.post("/login", (req, res, next) => {
+  const email = req.body.email;
+  const password = req.body.password;
+
+  if (!email || !password) {
+    res.status(400).json({ message: "Provide username and password" });
+    return;
+  }
+
   passport.authenticate("local", (err, theUser, failureDetails) => {
     if (err) {
       res
