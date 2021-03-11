@@ -136,8 +136,6 @@ authRoutes.post('/forgot', (req, res, next) => {
         if (!user) {
           res.status(500).json({ message: "No account with that email address exists." });
           return
-          // req.flash('error', 'No account with that email address exists.');
-          // return res.redirect('/forgot');
         }
 
         user.resetPasswordToken = token;
@@ -149,7 +147,7 @@ authRoutes.post('/forgot', (req, res, next) => {
 
         res.status(200).json({ message: "Token saved" })
         return
-      });
+      })
     }, (token, user, done) => {
       let host = process.env.CORS_ALLOWED
       let resetToken = token
@@ -182,10 +180,7 @@ authRoutes.post('/forgot', (req, res, next) => {
       res
         .status(500)
         .json({ message: "Saving user to database went wrong." });
-      return;
-    
-    // if (err) return next(err);
-    // res.redirect('/forgot');
+      return;   
   });
 });
 
