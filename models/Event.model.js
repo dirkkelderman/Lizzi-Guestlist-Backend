@@ -7,6 +7,9 @@ const eventSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: 'Guest',
     }],
+    coOwner: {
+      type: String,
+    },
     eventName: {
       type: String,
       trim: true,
@@ -25,10 +28,10 @@ const eventSchema = new Schema(
     description: {
       type: String,
     },
-    owner: {
+    owner: [{
       type: Schema.Types.ObjectId,
       ref: 'User',
-    },
+    }],
   },
   {
     timestamps: true

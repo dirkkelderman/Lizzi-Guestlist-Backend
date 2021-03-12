@@ -21,9 +21,7 @@ eventsRoutes.get('/events', (req, res, next) => {
 // Create a event
 eventsRoutes.post('/events', (req, res, next) => {
 
-  console.log("User id...", req.user._id)
-
-  const {eventName, date, guestNumber, location, description} = req.body
+  const {eventName, date, guestNumber, location, description, coOwner} = req.body
   const owner = req.user._id
 
   if (!eventName || !date) {
@@ -38,18 +36,30 @@ eventsRoutes.post('/events', (req, res, next) => {
     location,
     description,
     owner,
+    coOwner,
   })
-  .then(response => {
-    res.status(200).json(response)
-    return User.findByIdAndUpdate(owner, 
-      {$push: { event: response._id}
-    }, 
-      {new: true})
-  })
-  .catch( err => {
-    console.log(err)
-    res.status(500).json(err)
-  })
+    .then((response) => {
+      User.findByIdAndUpdate(
+        owner,
+        { $push: { event: response._id } },
+        { new: true }
+      );
+      res.status(200).json(response);
+
+      User.findOne({ email: coOwner })
+        .populate("User")
+        .then((coOwnerOfEvent) => {
+          Event.findOneAndUpdate(
+            { coOwner: coOwnerOfEvent.email },
+            { $push: { owner: coOwnerOfEvent._id } }
+          )
+        });
+    })
+
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json(err);
+    });
 })
 
 // Get a single event
