@@ -12,7 +12,6 @@ const crypto = require('crypto');
 const mongoose = require('mongoose');
 const router  = express.Router();
 
-
 authRoutes.post("/signup", (req, res, next) => {
   const email = req.body.email;
   const password = req.body.password;
@@ -55,6 +54,8 @@ authRoutes.post("/signup", (req, res, next) => {
       lastName: lastName,
     });
 
+    
+
     aNewUser.save((err) => {
       if (err) {
         console.log(err);
@@ -73,7 +74,8 @@ authRoutes.post("/signup", (req, res, next) => {
 
         res.status(200).json(aNewUser);
       });
-    });
+      
+    })
   });
 });
 
